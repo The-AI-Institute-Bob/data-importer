@@ -31,7 +31,7 @@ Script to import csv in the database
            --database                                                        [requis]
 
 
-##csv structure##
+## csv structure
 
 the basic csv field should be 
   * question
@@ -40,7 +40,7 @@ the basic csv field should be
   * question_03
   * source
 
-In the file src/sanitizer.js you can define equivalance 
+### In the file src/sanitizer.js you can define equivalance 
 
 ``` javascript
 const keyEquivalence = {
@@ -55,4 +55,6 @@ const keyEquivalence = {
 
 ## Examples ##
 
->  node import_csv.js --db=bob --user=aii --host=db-core.czcdgzwouwz1.eu-west-3.rds.amazonaws.com --password 'xxxx' --corpus_id=109 --lang=fr  --quality=good --relevancy=1 --valid=1 --visibility --chapter_id=72 --file ~/Downloads/CNED\ -\ AP\ Q_R.csv
+``` shellsession
+node import_csv.js --db=bob --user=aii --host=db-core.czcdgzwouwz1.eu-west-3.rds.amazonaws.com --password 'xxxx' --corpus_id=109 --lang=fr  --quality=good --relevancy=1 --valid=1 --visibility --chapter_id=72 --file ~/Downloads/CNED\ -\ AP\ Q_R.csv
+```
