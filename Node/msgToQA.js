@@ -1,16 +1,10 @@
 const { Sequelize, DataTypes, Op } = require('sequelize');
-const QAParser = require('./src/qaparser');
 const initModels = require('./src/models/init-models');
-const { insertQAFromRecord } = require('./src/qainserter');
+const { messagesToQAs } = require('./src/messagers');
 const yargs = require('yargs');
 
-
 (async () => {
-  const { argv } = yargs.option('file', {
-    alias: 'f',
-    description: 'json questions and answers file',
-  })
-    .option('host', {
+  const { argv } = yargs.option('host', {
       description: 'postgres hostname',
     })
     .option('user', {
@@ -25,8 +19,9 @@ const yargs = require('yargs');
     .option('corpus_id', {
       description: 'the corpus id',
     })
-    .option('user_id', {
-      description: 'the user_id used as created_by',
+    .option('course_id', {
+      array: true,
+      description: 'the course ids',
     })
     .option('valid', {
       type: 'number',
@@ -74,16 +69,13 @@ const yargs = require('yargs');
       description: 'lang of the questions/answers',
       type: 'string',
     })
-   .demandOption(['file', 'host', 'user', 'db', 'corpus_id']);
+    .demandOption(['host', 'user', 'db', 'corpus_id', 'course_id']);
 
-  const corpusID = argv.corpus_id;
-  if (!corpusID) {
-    console.log('corpus_id is mandatory');
-  }
+
   const options = {};
   const possibleOptions = [
     'user_id', 'valid', 'fuzzy', 'off_topic', 'relevancy', 'question_type',
-    'visibility', 'quality', 'chapter_id', 'lang',
+    'visibility', 'quality', 'chapter_id', 'lang', 'corpus_id',
   ];
   possibleOptions.forEach((o) => {
     if (argv.hasOwnProperty(o)) {
@@ -96,12 +88,6 @@ const yargs = require('yargs');
   console.log(`options = ${JSON.stringify(options, null, 2)}`);
   const sequelize = new Sequelize(argv.db, argv.user, argv.password, { host: argv.host, dialect: 'postgres' });
   const models = initModels(sequelize);
-  const parser = new QAParser(argv.file);
-  await parser.parse(async (err, records) => {
-    if (!err) {
-      for(let i = 0; i < records.length; i += 1) {
-        await insertQAFromRecord(models, records[i], corpusID, options);
-      }
-    }
-  });
+
+  await messagesToQAs(models, argv.course_id, options);
 })();

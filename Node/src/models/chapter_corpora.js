@@ -1,11 +1,43 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('tags', {
+  return sequelize.define('chapter_corpora', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
+    },
+    chapter_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'chapters',
+        key: 'id'
+      }
+    },
+    corpus_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'corpora',
+        key: 'id'
+      }
+    },
+    comment: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    rating: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    created_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    updated_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     },
     created_at: {
       type: DataTypes.DATE,
@@ -14,60 +46,21 @@ module.exports = function(sequelize, DataTypes) {
     },
     updated_at: {
       type: DataTypes.DATE,
-      allowNull: true
-    },
-    created_by: {
-      type: DataTypes.INTEGER,
       allowNull: true,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
-    },
-    updated_by: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
-    },
-    label: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
+      defaultValue: Sequelize.Sequelize.fn('now')
     },
     deleted_at: {
       type: DataTypes.DATE,
       allowNull: true
-    },
-    client_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'clients',
-        key: 'id'
-      }
     }
   }, {
     sequelize,
-    tableName: 'tags',
+    tableName: 'chapter_corpora',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "tags_pkey",
+        name: "chapter_corpora_pkey",
         unique: true,
         fields: [
           { name: "id" },

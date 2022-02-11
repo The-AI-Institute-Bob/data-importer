@@ -1,36 +1,68 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('corpora', {
+  return sequelize.define('users', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    label: {
+    role_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'roles',
+        key: 'id'
+      }
+    },
+    firstname: {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    description: {
+    lastname: {
       type: DataTypes.TEXT,
+      allowNull: false
+    },
+    email_address: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    date_of_birth: {
+      type: DataTypes.DATEONLY,
       allowNull: true
     },
     lang: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+      defaultValue: "en"
+    },
+    country: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: true
+    },
+    context: {
+      type: DataTypes.JSON,
+      allowNull: true
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: true
+    },
+    deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false
     },
     created_at: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       defaultValue: Sequelize.Sequelize.fn('now')
     },
-    client_id: {
-      type: DataTypes.INTEGER,
+    updated_at: {
+      type: DataTypes.DATE,
       allowNull: true,
-      references: {
-        model: 'clients',
-        key: 'id'
-      }
+      defaultValue: Sequelize.Sequelize.fn('now')
     },
     created_by: {
       type: DataTypes.INTEGER,
@@ -39,11 +71,6 @@ module.exports = function(sequelize, DataTypes) {
         model: 'users',
         key: 'id'
       }
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.Sequelize.fn('now')
     },
     updated_by: {
       type: DataTypes.INTEGER,
@@ -57,43 +84,21 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATE,
       allowNull: true
     },
-    seeds: {
-      type: DataTypes.ARRAY(DataTypes.TEXT),
+    email_student: {
+      type: DataTypes.STRING,
       allowNull: true
-    },
-    blacklist: {
-      type: DataTypes.ARRAY(DataTypes.TEXT),
-      allowNull: true
-    },
-    external_id: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      unique: "corpora_external_id_key"
     }
   }, {
     sequelize,
-    tableName: 'corpora',
+    tableName: 'users',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "corpora_external_id_key",
-        unique: true,
-        fields: [
-          { name: "external_id" },
-        ]
-      },
-      {
-        name: "corpora_pkey",
+        name: "users_pkey",
         unique: true,
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "idx_corpora_external_id",
-        fields: [
-          { name: "external_id" },
         ]
       },
     ]

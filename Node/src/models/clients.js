@@ -30,7 +30,6 @@ module.exports = function(sequelize, DataTypes) {
     external_id: {
       type: DataTypes.TEXT,
       allowNull: true,
-      defaultValue: "\"left\"(regexp_replace(encode(digest((((currval(clients_id_seq",
       unique: "clients_external_id_key"
     }
   }, {

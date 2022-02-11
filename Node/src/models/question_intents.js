@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('courses', {
+  return sequelize.define('question_intents', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -34,73 +34,47 @@ module.exports = function(sequelize, DataTypes) {
     },
     label: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: false
     },
-    description: {
+    intent_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'intents',
+        key: 'id'
+      }
+    },
+    lang: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: false
     },
     client_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'clients',
+        model: 'intents',
         key: 'id'
       }
     },
-    deleted_at: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    contact_id: {
+    course_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'users',
+        model: 'intents',
         key: 'id'
       }
-    },
-    lms_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'lms',
-        key: 'id'
-      }
-    },
-    external_id: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      unique: "courses_external_id_key"
-    },
-    lang: {
-      type: DataTypes.TEXT,
-      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'courses',
+    tableName: 'question_intents',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "courses_external_id_key",
-        unique: true,
-        fields: [
-          { name: "external_id" },
-        ]
-      },
-      {
-        name: "courses_pkey",
+        name: "question_intents_pkey",
         unique: true,
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "idx_courses_external_id",
-        fields: [
-          { name: "external_id" },
         ]
       },
     ]

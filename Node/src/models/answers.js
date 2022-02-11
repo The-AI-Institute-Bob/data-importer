@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     lang: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.TEXT,
       allowNull: false
     },
     corpus_id: {
@@ -20,18 +20,18 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     level: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.TEXT,
       allowNull: false,
       defaultValue: "intermediate"
     },
     quality: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.TEXT,
       allowNull: false,
       defaultValue: "unknown"
     },
     uri: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: true
     },
     source_type: {
       type: DataTypes.STRING,
@@ -149,6 +149,7 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'answers',
     schema: 'public',
+    hasTrigger: true,
     timestamps: false,
     indexes: [
       {

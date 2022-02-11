@@ -47,6 +47,14 @@ module.exports = function(sequelize, DataTypes) {
         model: 'tags',
         key: 'id'
       }
+    },
+    client_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'clients',
+        key: 'id'
+      }
     }
   }, {
     sequelize,

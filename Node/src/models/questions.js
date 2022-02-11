@@ -126,11 +126,20 @@ module.exports = function(sequelize, DataTypes) {
     html: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    document_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'documents',
+        key: 'id'
+      }
     }
   }, {
     sequelize,
     tableName: 'questions',
     schema: 'public',
+    hasTrigger: true,
     timestamps: false,
     indexes: [
       {

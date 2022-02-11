@@ -1,6 +1,6 @@
 const assert = require('assert');
 const QAParser = require('../src/qaparser.js');
-const {sanitizeString, sanitizeObject, sanitizeObjects} = require('../src/sanitizer.js');
+const {sanitizeString, sanitizeObject, sanitizeObjects, removeGreatings} = require('../src/sanitizer.js');
 
 describe('Sanitizer', () => {
   it('sanitize value', () => {
@@ -47,6 +47,14 @@ describe('Sanitizer', () => {
     const lo1 = [o1, o2];
     const lr1 = [r1, r2];
     assert.deepEqual(lr1, sanitizeObjects(lo1));
+  });
+  it('remove greatings', () => {
+    const t1 = "Bonjour, merci de préciser la matière pour que je puisse vous répondre de manière satisfaisante.\n- Julien, de l'équipe accompagnement";
+    const s1 = "merci de préciser la matière pour que je puisse vous répondre de manière satisfaisante.";
+    const t2 = "je vous informe que les choix portés sur la fiche dialogue peuvent être modifiés avec accord des professeurs principaux\n- Florent, de l'équipe accompagnement";
+    const s2 = "je vous informe que les choix portés sur la fiche dialogue peuvent être modifiés avec accord des professeurs principaux";
+    assert.equal(s1, removeGreatings(t1), 'removeGreatings1');
+    assert.equal(s2, removeGreatings(t2), 'removeGreatings2');
   });
 });
 

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('tags', {
+  return sequelize.define('intent_categories', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -34,40 +34,20 @@ module.exports = function(sequelize, DataTypes) {
     },
     label: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: false
     },
     description: {
       type: DataTypes.TEXT,
       allowNull: true
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
-    },
-    deleted_at: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    client_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'clients',
-        key: 'id'
-      }
     }
   }, {
     sequelize,
-    tableName: 'tags',
+    tableName: 'intent_categories',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "tags_pkey",
+        name: "intent_categories_pkey",
         unique: true,
         fields: [
           { name: "id" },

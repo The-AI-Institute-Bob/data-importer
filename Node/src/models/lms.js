@@ -1,11 +1,15 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('tags', {
+  return sequelize.define('lms', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
+    },
+    label: {
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     created_at: {
       type: DataTypes.DATE,
@@ -14,7 +18,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     updated_at: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.fn('now')
     },
     created_by: {
       type: DataTypes.INTEGER,
@@ -32,42 +37,18 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    label: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    description: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
-    },
     deleted_at: {
       type: DataTypes.DATE,
       allowNull: true
-    },
-    client_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'clients',
-        key: 'id'
-      }
     }
   }, {
     sequelize,
-    tableName: 'tags',
+    tableName: 'lms',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "tags_pkey",
+        name: "lms_pkey",
         unique: true,
         fields: [
           { name: "id" },

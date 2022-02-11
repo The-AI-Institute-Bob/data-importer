@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('courses', {
+  return sequelize.define('intents', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -34,73 +34,31 @@ module.exports = function(sequelize, DataTypes) {
     },
     label: {
       type: DataTypes.TEXT,
-      allowNull: true
+      allowNull: false
     },
     description: {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    client_id: {
+    category_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'clients',
+        model: 'intent_categories',
         key: 'id'
       }
-    },
-    deleted_at: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    contact_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
-    },
-    lms_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'lms',
-        key: 'id'
-      }
-    },
-    external_id: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      unique: "courses_external_id_key"
-    },
-    lang: {
-      type: DataTypes.TEXT,
-      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'courses',
+    tableName: 'intents',
     schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "courses_external_id_key",
-        unique: true,
-        fields: [
-          { name: "external_id" },
-        ]
-      },
-      {
-        name: "courses_pkey",
+        name: "intents_pkey",
         unique: true,
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "idx_courses_external_id",
-        fields: [
-          { name: "external_id" },
         ]
       },
     ]

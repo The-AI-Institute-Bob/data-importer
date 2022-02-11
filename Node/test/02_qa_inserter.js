@@ -2,6 +2,8 @@ const assert = require('assert');
 const { Sequelize, DataTypes, Op } = require('sequelize');
 const initModels = require('../src/models/init-models');
 const { insertQAFromRecord } = require('../src/qainserter');
+const { corporaToChapters } = require( '../src/messagers');
+
 const sequelize = new Sequelize('bob', 'rennert', '', { host: 'localhost', dialect: 'postgres' });
 const models = initModels(sequelize);
 
@@ -109,5 +111,18 @@ describe('insert_01', function () {
       }});
     await question.destroy();
     await answer.destroy();
+  });
+});
+
+describe('chapter/corpora mapping', function () {
+  it('build mapping', async function () {
+    const corporaToC = await corporaToChapters(models, [107, 108]);
+    console.log('-----------------------------------------------------');
+    console.log(JSON.stringify(corporaToC, null, 2));
+    console.log('-----------------------------------------------------');
+    assert.equal(corporaToC[107].course_id, 19);
+    assert.equal(corporaToC[107].chapter_id, 70);
+    assert.equal(corporaToC[108].course_id, 18);
+    assert.equal(corporaToC[108].chapter_id, 69);
   });
 });
