@@ -9,9 +9,7 @@ const keyEquivalence = {
   'nom media associé (optionnel)': 'media',
 };
 
-const reCleanStrings = [
-  { s: /\s*[\n]$/, r: '' },
-];
+const reCleanStrings = [{ s: /\s*[\n]$/, r: '' }];
 
 // sanitizeKey this is used to clean up the key name to have uniformize key names
 function sanitizeKey(key) {
@@ -41,7 +39,9 @@ function capitalizeFirstLetter(string) {
 
 function sanitizeObject(o) {
   const o2 = {};
-  Object.keys(o).forEach((k) => { o2[sanitizeKey(k)] = sanitizeString(o[k]); });
+  Object.keys(o).forEach((k) => {
+    o2[sanitizeKey(k)] = sanitizeString(o[k]);
+  });
   return o2;
 }
 
@@ -57,7 +57,6 @@ const greatings = [
   /cordialement/i,
   /[-][^,\n]+[,]\s*de l'équipe accompagnement/i,
   /nous vous remercions de votre compréhension[.]/i,
-
 ];
 function removeGreatings(t) {
   let text = t;
@@ -74,8 +73,4 @@ function sanitizeQuestion(s) {
   return capitalizeFirstLetter(removeGreatings(s));
 }
 
-exports.sanitizeString = sanitizeString;
-exports.sanitizeObject = sanitizeObject;
-exports.sanitizeObjects = sanitizeObjects;
-exports.removeGreatings = removeGreatings;
-exports.sanitizeQuestion = sanitizeQuestion;
+export { sanitizeString, sanitizeObject, sanitizeObjects, removeGreatings, sanitizeQuestion };

@@ -1,15 +1,29 @@
-const assert = require('assert');
-const { Sequelize, DataTypes, Op } = require('sequelize');
-const initModels = require('../src/models/init-models');
-const { insertQAFromRecord } = require('../src/qainserter');
-const { corporaToChapters } = require( '../src/messagers');
+import assert from 'assert';
+import { Sequelize, DataTypes, Op } from 'sequelize';
+import initModels from '../src/models/init-models.js';
+import { insertQAFromRecord } from '../src/qainserter.js';
+import { corporaToChapters } from '../src/messagers.js';
 
-const sequelize = new Sequelize('bob', 'rennert', '', { host: 'localhost', dialect: 'postgres' });
-const models = initModels(sequelize);
+let sequelize;
+let models;
+before(async () => {
+  if (!process.env.POSTGRES_HOST) {
+    return;
+  }
+  sequelize = new Sequelize(
+    'bob',
+    process.env.POSTGRES_USER || os.userInfo().username,
+    process.env.POSTGRES_PASSWORD,
+    { host: process.env.POSTGRES_HOST, dialect: 'postgres' },
+  );
+  models = initModels(sequelize);
+});
 
 describe('insert_01', function () {
+  if (!sequelize) {
+    return;
+  }
   it('insert simpler question', async function () {
-    this.timeout(10000);
     const r1 = { question: 'Ceci est une très bonne question ?', answer: 'Non!!' };
     const options = {
       question_type: '3',
@@ -26,12 +40,13 @@ describe('insert_01', function () {
     assert.equal(r1.question, question.text, 'question.text');
     assert.equal('client-content', question.source_type, 'question.source_type');
     assert.equal(r1.answer, answer.text, 'answer.text');
-//    const qa = question.getquestion();
+    //    const qa = question.getquestion();
     await models.question_answers.destroy({
       where: {
         question_id: question.id,
-        answer_id: answer.id
-      }});
+        answer_id: answer.id,
+      },
+    });
     await question.destroy();
     await answer.destroy();
   });
@@ -41,7 +56,8 @@ describe('insert_01', function () {
       question: 'Ceci est une très bonne question ?',
       question_02: 'Est-ce une bonne question ?',
       question_03: 'Est-ce que la qualité de la question est bonne ?',
-      answer: 'Non!!' };
+      answer: 'Non!!',
+    };
     const options = {
       question_type: '3',
       lang: 'fr',
@@ -52,29 +68,37 @@ describe('insert_01', function () {
       visibility: 1,
       quality: 'good',
     };
-    const [question, answer, question2, question3] = await insertQAFromRecord(models, r1, 93, options);
+    const [question, answer, question2, question3] = await insertQAFromRecord(
+      models,
+      r1,
+      93,
+      options,
+    );
     //    console.log(`created = ${JSON.stringify([question, answer], null, 2)}`);
     assert.equal(r1.question, question.text, 'question.text');
     assert.equal(r1.question_02, question2.text, 'question.text');
     assert.equal(r1.question_03, question3.text, 'question.text');
     assert.equal('client-content', question.source_type, 'question.source_type');
     assert.equal(r1.answer, answer.text, 'answer.text');
-//    const qa = question.getquestion();
+    //    const qa = question.getquestion();
     await models.question_answers.destroy({
       where: {
         question_id: question.id,
         answer_id: answer.id,
-      }});
+      },
+    });
     await models.question_answers.destroy({
       where: {
         question_id: question2.id,
         answer_id: answer.id,
-      }});
+      },
+    });
     await models.question_answers.destroy({
       where: {
         question_id: question3.id,
         answer_id: answer.id,
-      }});
+      },
+    });
     await question.destroy();
     await question2.destroy();
     await question3.destroy();
@@ -99,22 +123,27 @@ describe('insert_01', function () {
     assert.equal(r1.question, question.text, 'question.text');
     assert.equal('client-content', question.source_type, 'question.source_type');
     assert.equal(r1.answer, answer.text, 'answer.text');
-//    const qa = question.getquestion();
+    //    const qa = question.getquestion();
     await models.question_answers.destroy({
       where: {
         question_id: question.id,
         answer_id: answer.id,
-      }});
+      },
+    });
     await models.question_tags.destroy({
       where: {
         question_id: question.id,
-      }});
+      },
+    });
     await question.destroy();
     await answer.destroy();
   });
 });
 
 describe('chapter/corpora mapping', function () {
+  if (!sequelize) {
+    return;
+  }
   it('build mapping', async function () {
     const corporaToC = await corporaToChapters(models, [107, 108]);
     console.log('-----------------------------------------------------');

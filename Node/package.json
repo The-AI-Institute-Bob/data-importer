@@ -1,10 +1,12 @@
 {
   "name": "data-importer",
-  "version": "1.0.0",
+  "packageManager": "yarn@3.2.0",
+  "type": "module",
+  "version": "0.0.0-development",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -17,12 +19,45 @@
     "csv-parse": "^4.16.0",
     "mocha": "^9.0.3",
     "pg": "^8.7.1",
-    "sequelize": "^6.6.5",
+    "sequelize": "^6.17.0",
     "test": "^0.6.0"
   },
   "devDependencies": {
-    "eslint": "^7.31.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.23.4"
+    "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.23.4",
+    "esm": "^3.2.25",
+    "sequelize-auto": "0.8.5"
+  },
+  "moduleFileExtensions": [
+    "mjs",
+    "js",
+    "json",
+    "jsx",
+    "ts",
+    "tsx",
+    "node"
+  ],
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ],
+      "@semantic-release/github",
+      [
+        "@semantic-release/exec",
+        {
+          "publishCmd": "yarn npm publish"
+        }
+      ]
+    ]
   }
 }

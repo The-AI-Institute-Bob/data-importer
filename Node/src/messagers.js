@@ -1,6 +1,6 @@
-const Sequelize = require('sequelize');
-const { fetchOrCreateAnswer, fetchOrCreateQuestion } = require('./qainserter');
-const { removeGreatings, sanitizeQuestion } = require('../src/sanitizer.js');
+import Sequelize from 'sequelize';
+import { fetchOrCreateAnswer, fetchOrCreateQuestion } from './qainserter.js';
+import { removeGreatings, sanitizeQuestion } from '../src/sanitizer.js';
 
 function optionsCorpusID(models, courseID, options) {
   if (options.corpus_id) {
@@ -13,37 +13,39 @@ function optionsCorpusID(models, courseID, options) {
 }
 
 async function corporaToChapters(models, corporaIDs) {
-    const chapters = await models.chapters.findAll(
+  const chapters = await models.chapters.findAll({
+    include: [
       {
-        include: [
-          {
-            model: models.chapter_corpora,
-            as: 'chapter_corporas',
-            where:{
-              corpus_id: { [Sequelize.Op.in]: corporaIDs },
-            },
-            order: [ 'id' ],
-          }
-        ]
-      }
-    );
+        model: models.chapter_corpora,
+        as: 'chapter_corporas',
+        where: {
+          corpus_id: { [Sequelize.Op.in]: corporaIDs },
+        },
+        order: ['id'],
+      },
+    ],
+  });
   console.log('-----------------------------------------------------');
   console.log(JSON.stringify(chapters, null, 2));
   console.log('-----------------------------------------------------');
-  corporaToC = {};
-  for(let i = 0; i < chapters.length; i += 1) {
-    console.log(`corpus_id = ${chapters[i].chapter_corporas[0].corpus_id}, course_id = ${chapters[i].course_id}, chapter_id = ${chapters[i].id}`);
-    const v = {chapter_id: chapters[i].id, course_id: chapters[i].course_id };
+  const corporaToC = {};
+  for (let i = 0; i < chapters.length; i += 1) {
+    console.log(
+      `corpus_id = ${chapters[i].chapter_corporas[0].corpus_id}, course_id = ${chapters[i].course_id}, chapter_id = ${chapters[i].id}`,
+    );
+    const v = { chapter_id: chapters[i].id, course_id: chapters[i].course_id };
     corporaToC[chapters[i].chapter_corporas[0].corpus_id] = v;
   }
   return corporaToC;
 }
 
 async function messageToQA(models, ma, options) {
-  console.log(`_________________\n messageToQA(${ma.content}, ${JSON.stringify(options, null, 2)}})`);
+  console.log(
+    `_________________\n messageToQA(${ma.content}, ${JSON.stringify(options, null, 2)}})`,
+  );
   const mq = await models.messages.findByPk(ma.first_message_id);
   if (!mq) {
-    console.log (`question not found for ${ma.first_message_id}`);
+    console.log(`question not found for ${ma.first_message_id}`);
     return;
   }
   if (mq.msg_type !== 'question') {
@@ -72,7 +74,14 @@ async function messageToQA(models, ma, options) {
     console.log(`could not find question`);
     return;
   }
-  const answer = await fetchOrCreateAnswer(models, question, removeGreatings(ma.content), corpusID, 'answer from teacher', options);
+  const answer = await fetchOrCreateAnswer(
+    models,
+    question,
+    removeGreatings(ma.content),
+    corpusID,
+    'answer from teacher',
+    options,
+  );
   if (answer) {
     const message = ma;
     message.answer_id = answer.id;
@@ -96,5 +105,4 @@ async function messagesToQAs(models, courseIDs, options) {
   }
 }
 
-exports.messagesToQAs = messagesToQAs;
-exports.corporaToChapters = corporaToChapters;
+export { corporaToChapters, messageToQA, messagesToQAs };

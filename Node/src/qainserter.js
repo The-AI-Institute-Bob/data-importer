@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
 async function linkQuestionAndAnwser(models, questionID, answerID) {
   await models.question_answers.create({
@@ -8,8 +8,18 @@ async function linkQuestionAndAnwser(models, questionID, answerID) {
 }
 
 const questionOptions = [
-  'question_type', 'valid', 'fuzzy', 'off_topic', 'parent', 'relevancy',
-  'visibility', 'source_type', 'lang', 'created_by', 'updated_by', 'uri',
+  'question_type',
+  'valid',
+  'fuzzy',
+  'off_topic',
+  'parent',
+  'relevancy',
+  'visibility',
+  'source_type',
+  'lang',
+  'created_by',
+  'updated_by',
+  'uri',
 ];
 
 const questionDefaultValues = {
@@ -40,7 +50,7 @@ async function fetchOrCreateQuestion(models, questionText, corpusID, options) {
         qo[o] = questionDefaultValues[o];
       }
     });
-//    console.log(`qa=${JSON.stringify(qo, null, 2)}`);
+    //    console.log(`qa=${JSON.stringify(qo, null, 2)}`);
     q = await models.questions.create(qo);
     if (options.hasOwnProperty('answerID')) {
       await linkQuestionAndAnwser(models, q.id, options.answerID);
@@ -68,8 +78,17 @@ async function fetchOrCreateQuestion(models, questionText, corpusID, options) {
 }
 
 const answerOptions = [
-  'lang', 'level', 'quality', 'source_type', 'visibility', 'chapter_id',
-  'tanda_score', 'quality_external_check', 'document_id', 'created_by', 'updated_by',
+  'lang',
+  'level',
+  'quality',
+  'source_type',
+  'visibility',
+  'chapter_id',
+  'tanda_score',
+  'quality_external_check',
+  'document_id',
+  'created_by',
+  'updated_by',
 ];
 
 const answerDefaultValues = {
@@ -150,10 +169,24 @@ async function insertQAFromRecord(models, record, corpusID, options) {
   if (record.after_2 && record.answer_after_2 !== '') {
     textAnswer = `${textAnswer}\n\n${record.answer_after_2}`;
   }
-  const answer = await fetchOrCreateAnswer(models, question, textAnswer, corpusID, record.source || '', options);
+  const answer = await fetchOrCreateAnswer(
+    models,
+    question,
+    textAnswer,
+    corpusID,
+    record.source || '',
+    options,
+  );
   const result = [question, answer];
   if (record.answer_02) {
-    const answer2 = await fetchOrCreateAnswer(models, question, record.answer_02, corpusID, record.source || '', options);
+    const answer2 = await fetchOrCreateAnswer(
+      models,
+      question,
+      record.answer_02,
+      corpusID,
+      record.source || '',
+      options,
+    );
     result.push(answer2);
   }
   if (record.question_02) {
@@ -173,6 +206,4 @@ async function insertQAFromRecord(models, record, corpusID, options) {
   return result;
 }
 
-exports.insertQAFromRecord = insertQAFromRecord;
-exports.fetchOrCreateQuestion = fetchOrCreateQuestion;
-exports.fetchOrCreateAnswer = fetchOrCreateAnswer;
+export { fetchOrCreateQuestion, fetchOrCreateAnswer, insertQAFromRecord };

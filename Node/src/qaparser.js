@@ -1,8 +1,8 @@
-const parse = require('csv-parse');
-const fs = require('fs');
-const { sanitizeObjects } = require('./sanitizer.js');
+import parse from 'csv-parse';
+import fs from 'fs';
+import { sanitizeObjects } from './sanitizer.js';
 
-class QAParser {
+export class QAParser {
   constructor(filename) {
     this.filename = filename;
   }
@@ -12,7 +12,8 @@ class QAParser {
       return;
     }
     const content = await fs.readFileSync(this.filename);
-    await parse(content,
+    await parse(
+      content,
       {
         trim: true,
         columns: true,
@@ -22,8 +23,9 @@ class QAParser {
           callback(err, records);
         }
         callback(err, sanitizeObjects(records));
-      });
+      },
+    );
   }
 }
 
-module.exports = QAParser;
+export default QAParser;

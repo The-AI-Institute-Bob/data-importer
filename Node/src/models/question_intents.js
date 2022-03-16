@@ -1,6 +1,9 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('question_intents', {
+import _sequelize from 'sequelize';
+const { Model, Sequelize } = _sequelize;
+
+export default class question_intents extends Model {
+  static init(sequelize, DataTypes) {
+  super.init({
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -52,7 +55,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'intents',
+        model: 'clients',
         key: 'id'
       }
     },
@@ -60,7 +63,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'intents',
+        model: 'courses',
         key: 'id'
       }
     }
@@ -79,4 +82,6 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
-};
+  return question_intents;
+  }
+}

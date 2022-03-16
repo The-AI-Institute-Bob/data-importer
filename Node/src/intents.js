@@ -1,8 +1,4 @@
-const Sequelize = require('sequelize');
-
-
-
-
+const { Sequelize } = require('@sequelize/core');
 
 async function messagesIntents(models, courseIDs) {
   const questions = await models.messages.findAll({
@@ -16,5 +12,6 @@ async function messagesIntents(models, courseIDs) {
   for (let i = 0; i < answersCandidates.length; i += 1) {
     await messageToQA(models, answersCandidates[i], options);
   }
-
 }
+
+export { messagesIntents };

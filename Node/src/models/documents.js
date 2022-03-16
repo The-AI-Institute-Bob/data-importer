@@ -1,6 +1,9 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('documents', {
+import _sequelize from 'sequelize';
+const { Model, Sequelize } = _sequelize;
+
+export default class documents extends Model {
+  static init(sequelize, DataTypes) {
+  super.init({
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -120,4 +123,6 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
-};
+  return documents;
+  }
+}
