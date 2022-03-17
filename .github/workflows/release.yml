@@ -61,7 +61,7 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.AWS_REPO_NAME }}
         run:
           export TAG=`git describe --tags --abbrev=0`
-          export SEMVER=${$TAG:-"0.0.0"}
+          export SEMVER=${$TAG}
           echo "build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${GITHUB_SHA} -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${SEMVER} ."
           docker build -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GITHUB_SHA}" -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest" -t "-t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${SEMVER}" .
           echo "Pushing image to ECR..."
