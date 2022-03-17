@@ -7,9 +7,6 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: Node
     steps:
       - name: configure AWS
         env:
@@ -43,6 +40,7 @@ jobs:
         run: npm install -g semantic-release semantic-release-codeartifact @semantic-release/exec
       - name: Install dependencies
         run: yarn install --immutable
+        working-directory: Node
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,3 +49,4 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           NPM_TOKEN: ${{ steps.setup-codeartifact.outputs.AUTH_TOKEN }}
         run: semantic-release --debug
+        working-directory: Node

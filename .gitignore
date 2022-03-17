@@ -107,11 +107,11 @@ dist
 
 ## yarn packages
 
-.pnp.*
-.yarn/*
-.yarn/cache/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+Node/.pnp.*
+Node/.yarn/*
+Node/.yarn/cache/*
+!Node/.yarn/patches
+!Node/.yarn/plugins
+!Node/.yarn/releases
+!Node/.yarn/sdks
+!Node/.yarn/versions
