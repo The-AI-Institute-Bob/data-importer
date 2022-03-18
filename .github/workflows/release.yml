@@ -22,13 +22,6 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: setup codeartifact
-        run: |
-          export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain ${{ secrets.CODEARTIFACT_DOMAIN }} --domain-owner ${{ secrets.CODEARTIFACT_DOMAIN_OWNER }} --query authorizationToken --output text`
-          yarn config set 'npmRegistries["https://professorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com/npm/npm.registery.profressorbob/"].npmAuthToken' "${CODEARTIFACT_AUTH_TOKEN}"
-          echo "::set-output name=AUTH_TOKEN::${CODEARTIFACT_AUTH_TOKEN}"
-        id: setup-codeartifact
-        working-directory: Node
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -45,6 +38,13 @@ jobs:
         run: npm install -g semantic-release semantic-release-codeartifact @semantic-release/exec
       - name: Install dependencies
         run: yarn install --immutable
+        working-directory: Node
+      - name: setup codeartifact
+        run: |
+          export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain ${{ secrets.CODEARTIFACT_DOMAIN }} --domain-owner ${{ secrets.CODEARTIFACT_DOMAIN_OWNER }} --query authorizationToken --output text`
+          yarn config set 'npmRegistries["https://professorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com/npm/npm.registery.profressorbob/"].npmAuthToken' "${CODEARTIFACT_AUTH_TOKEN}"
+          echo "::set-output name=AUTH_TOKEN::${CODEARTIFACT_AUTH_TOKEN}"
+        id: setup-codeartifact
         working-directory: Node
       - name: Release
         env:
