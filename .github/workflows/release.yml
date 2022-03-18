@@ -42,6 +42,7 @@ jobs:
           export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain ${{ secrets.CODEARTIFACT_DOMAIN }} --domain-owner ${{ secrets.CODEARTIFACT_DOMAIN_OWNER }} --query authorizationToken --output text`
           echo "NPM_TOKEN=${CODEARTIFACT_AUTH_TOKEN=}"
           yarn config set 'npmRegistries["https://professorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com/npm/npm.registery.profressorbob/"].npmAuthToken' "${CODEARTIFACT_AUTH_TOKEN}"
+          cat .yarnrc.yml
           echo "::set-output name=AUTH_TOKEN::${CODEARTIFACT_AUTH_TOKEN}"
         working-directory: Node
       - name: Install dependencies
