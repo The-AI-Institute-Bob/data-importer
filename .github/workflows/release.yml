@@ -64,7 +64,7 @@ jobs:
           echo "TAG= $TAG"
           export SEMVER=${TAG:-0.0.0}
           echo "SEMVER = $SEMVER"
-          echo "build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${GITHUB_SHA} -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${SEMVER} ."
-          docker build -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GITHUB_SHA}" -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest" -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${SEMVER}" .
+          echo "build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${GITHUB_SHA} -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${TAG} ."
+          docker build -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GITHUB_SHA}" -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest" -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${TAG}" .
           echo "Pushing image to ECR..."
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
