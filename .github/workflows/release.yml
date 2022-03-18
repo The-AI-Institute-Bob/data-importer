@@ -62,7 +62,7 @@ jobs:
         run:
           export TAG=`git describe --tags --abbrev=0`
           echo "TAG= $TAG"
-          export SEMVER=${TAG:-"0.0.0""}
+          export SEMVER=${TAG:-"0.0.0"}
           echo "SEMVER = $SEMVER"
           echo "build -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${GITHUB_SHA} -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest -t ${ECR_REGISTRY}/${ECR_REPOSITORY}:${TAG} ."
           docker build -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:${GITHUB_SHA}" -t "${ECR_REGISTRY}/${ECR_REPOSITORY}:latest" .
