@@ -40,9 +40,7 @@ jobs:
           CODEARTIFACT_REGISTRIE: ${{ secrets.CODEARTIFACT_REGISTRIE }}
         run: |
           export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain ${{ secrets.CODEARTIFACT_DOMAIN }} --domain-owner ${{ secrets.CODEARTIFACT_DOMAIN_OWNER }} --query authorizationToken --output text`
-          echo "NPM_TOKEN=${CODEARTIFACT_AUTH_TOKEN=}"
           yarn config set 'npmRegistries["https://professorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com/npm/npm.registery.profressorbob/"].npmAuthToken' "${CODEARTIFACT_AUTH_TOKEN}"
-          cat .yarnrc.yml
           echo "::set-output name=AUTH_TOKEN::${CODEARTIFACT_AUTH_TOKEN}"
         working-directory: Node
       - name: Install dependencies
@@ -67,5 +65,5 @@ jobs:
           export SEMVERSION=${TAG:-"0.0.0"}
           docker build -t "${ECR_REPOSITORY}:${GITHUB_SHA}" -t "${ECR_REPOSITORY}:latest" -t "${ECR_REPOSITORY}:${SEMVERSION}" .
           echo "Pushing image to ECR..."
-          docker push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY
         working-directory: Node
