@@ -1,10 +1,12 @@
-const { Sequelize, DataTypes, Op } = require('sequelize');
-const initModels = require('./src/models/init-models');
-const { messagesToQAs } = require('./src/messagers');
-const yargs = require('yargs');
+import { Sequelize, DataTypes, Op } from 'sequelize';
+import initModels from './src/models/init-models.js';
+import { messagesToQAs } from './src/messagers.js';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
 (async () => {
-  const { argv } = yargs.option('host', {
+  const { argv } = yargs(hideBin(process.argv))
+    .option('host', {
       description: 'postgres hostname',
     })
     .option('user', {
@@ -71,22 +73,33 @@ const yargs = require('yargs');
     })
     .demandOption(['host', 'user', 'db', 'corpus_id', 'course_id']);
 
-
   const options = {};
   const possibleOptions = [
-    'user_id', 'valid', 'fuzzy', 'off_topic', 'relevancy', 'question_type',
-    'visibility', 'quality', 'chapter_id', 'lang', 'corpus_id',
+    'user_id',
+    'valid',
+    'fuzzy',
+    'off_topic',
+    'relevancy',
+    'question_type',
+    'visibility',
+    'quality',
+    'chapter_id',
+    'lang',
+    'corpus_id',
   ];
   possibleOptions.forEach((o) => {
     if (argv.hasOwnProperty(o)) {
       options[o] = argv[o];
     }
   });
-  if(argv.tag_id) {
+  if (argv.tag_id) {
     options.tags = argv.tag_id;
   }
   console.log(`options = ${JSON.stringify(options, null, 2)}`);
-  const sequelize = new Sequelize(argv.db, argv.user, argv.password, { host: argv.host, dialect: 'postgres' });
+  const sequelize = new Sequelize(argv.db, argv.user, argv.password, {
+    host: argv.host,
+    dialect: 'postgres',
+  });
   const models = initModels(sequelize);
 
   await messagesToQAs(models, argv.course_id, options);
