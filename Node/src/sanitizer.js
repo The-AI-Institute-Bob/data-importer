@@ -1,3 +1,6 @@
+import { Marked } from '@ts-stack/markdown';
+import { NodeHtmlMarkdown } from 'node-html-markdown';
+
 const keyEquivalence = {
   questions: 'question',
   réponse: 'answer',
@@ -73,4 +76,59 @@ function sanitizeQuestion(s) {
   return capitalizeFirstLetter(removeGreatings(s));
 }
 
-export { sanitizeString, sanitizeObject, sanitizeObjects, removeGreatings, sanitizeQuestion };
+/**
+ * @desc A function to convert markdown to html
+ * @param string $s -  text expression
+ * @return $  -> is replace by <inline-math></inline-math> $$ $$ -> <block-math></block-math>
+ */
+
+function text2html(s) {
+  if (s === undefined || s === null || (typeof s === 'string' && s.length == 0)) {
+    return s;
+  }
+  let t = s;
+  if (typeof t !== 'string') {
+    t = s.toString();
+  }
+  // transfer math blocks inside $$...$$ into <block-math> tag
+  let html = t.replace(
+    /(?<!\\)\${2}([\s\S]+?)(?<!\\)\${2}/g,
+    '<block-math math="$1"></block-math>',
+  );
+  // transfer math inline blocks inside $...$ into <inline-math> tag
+  html = html.replace(/(?<!\\)\$([\s\S]+?)(?<!\\)\$/g, '<inline-math math="$1"></inline-math>');
+  // replace escaped $ to normal $ (with slashback)
+  html = html.replace('\\$', '$');
+  // generic markdown conversion for other tags
+  html = Marked.parse(html).trim();
+  return html;
+}
+
+/**
+ * @desc A function to convert html to markdown
+ *
+ * @param html html code to be converted to markdown
+ * @returns equivalent markdown code
+ */
+function html2text(html) {
+  if (html === undefined || html === null || typeof html !== 'string' || html.length == 0) {
+    return html;
+  }
+  let text = html.replace(/(?<!\\)\$/g, '\\$');
+  text = text.replace(/<inline-math math=['"](.+?)['"]><\/inline-math>/g, '$$$1$$');
+  text = text.replace(/<block-math math=['"](.+?)['"]><\/block-math>/g, '$$$$$1$$$$');
+  text = NodeHtmlMarkdown.translate(text);
+  // remove escaping characters
+  text = text.replace(/\\([^\s])/g, '$1');
+  return text;
+}
+
+export {
+  sanitizeString,
+  sanitizeObject,
+  sanitizeObjects,
+  removeGreatings,
+  sanitizeQuestion,
+  text2html,
+  html2text,
+};

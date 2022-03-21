@@ -305,6 +305,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ts-stack/markdown@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@ts-stack/markdown@npm:1.4.0::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2F%40ts-stack%2Fmarkdown%2F-%2Fmarkdown-1.4.0.tgz"
+  dependencies:
+    tslib: ^2.0.0
+  checksum: 2e62d5f99e2236305f1d0b58390757343534fa863c66a698370d9984949e72f4c82d4cf411cc149baaec8c1bba97947a8cb1c50a84f7c2e5626f6c43d01a5c59
+  languageName: node
+  linkType: hard
+
 "@tsconfig/node10@npm:^1.0.7":
   version: 1.0.8
   resolution: "@tsconfig/node10@npm:1.0.8::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2F%40tsconfig%2Fnode10%2F-%2Fnode10-1.0.8.tgz"
@@ -688,6 +697,13 @@ __metadata:
   version: 2.2.0
   resolution: "binary-extensions@npm:2.2.0"
   checksum: ccd267956c58d2315f5d3ea6757cf09863c5fc703e50fbeb13a7dc849b812ef76e3cf9ca8f35a0c48498776a7478d7b4a0418e1e2b8cb9cb9731f2922aaad7f8
+  languageName: node
+  linkType: hard
+
+"boolbase@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "boolbase@npm:1.0.0::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fboolbase%2F-%2Fboolbase-1.0.0.tgz"
+  checksum: 3e25c80ef626c3a3487c73dbfc70ac322ec830666c9ad915d11b701142fab25ec1e63eff2c450c74347acfd2de854ccde865cd79ef4db1683f7c7b046ea43bb0
   languageName: node
   linkType: hard
 
@@ -1094,6 +1110,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-select@npm:^4.1.3":
+  version: 4.2.1
+  resolution: "css-select@npm:4.2.1::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fcss-select%2F-%2Fcss-select-4.2.1.tgz"
+  dependencies:
+    boolbase: ^1.0.0
+    css-what: ^5.1.0
+    domhandler: ^4.3.0
+    domutils: ^2.8.0
+    nth-check: ^2.0.1
+  checksum: 6617193ec7c332217204c4ea371d332c6845603fda415e36032e7e9e18206d7c368a14e3c57532082314d2689955b01122aa1097c1c52b6c1cab7ad90970d3c6
+  languageName: node
+  linkType: hard
+
+"css-what@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "css-what@npm:5.1.0::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fcss-what%2F-%2Fcss-what-5.1.0.tgz"
+  checksum: 0b75d1bac95c885c168573c85744a6c6843d8c33345f54f717218b37ea6296b0e99bb12105930ea170fd4a921990392a7c790c16c585c1d8960c49e2b7ec39f7
+  languageName: node
+  linkType: hard
+
 "csv-parse@npm:^4.16.0":
   version: 4.16.3
   resolution: "csv-parse@npm:4.16.3"
@@ -1150,6 +1186,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": ^16.2.3
     "@commitlint/config-conventional": ^16.2.1
+    "@ts-stack/markdown": ^1.4.0
     add: ^2.0.6
     assert: ^2.0.0
     csv-parse: ^4.16.0
@@ -1158,7 +1195,9 @@ __metadata:
     eslint-config-airbnb-base: ^15.0.0
     eslint-plugin-import: ^2.23.4
     esm: ^3.2.25
+    is-html: ^3.0.0
     mocha: ^9.0.3
+    node-html-markdown: ^1.1.3
     pg: ^8.7.1
     sequelize: ^6.17.0
     sequelize-auto: 0.8.5
@@ -1305,6 +1344,44 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dom-serializer@npm:^1.0.1":
+  version: 1.3.2
+  resolution: "dom-serializer@npm:1.3.2::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fdom-serializer%2F-%2Fdom-serializer-1.3.2.tgz"
+  dependencies:
+    domelementtype: ^2.0.1
+    domhandler: ^4.2.0
+    entities: ^2.0.0
+  checksum: bff48714944d67b160db71ba244fb0f3fe72e77ef2ec8414e2eeb56f2d926e404a13456b8b83a5392e217ba47dec2ec0c368801b31481813e94d185276c3e964
+  languageName: node
+  linkType: hard
+
+"domelementtype@npm:^2.0.1, domelementtype@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "domelementtype@npm:2.2.0::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fdomelementtype%2F-%2Fdomelementtype-2.2.0.tgz"
+  checksum: 24cb386198640cd58aa36f8c987f2ea61859929106d06ffcc8f547e70cb2ed82a6dc56dcb8252b21fba1f1ea07df6e4356d60bfe57f77114ca1aed6828362629
+  languageName: node
+  linkType: hard
+
+"domhandler@npm:^4.2.0, domhandler@npm:^4.3.0":
+  version: 4.3.1
+  resolution: "domhandler@npm:4.3.1::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fdomhandler%2F-%2Fdomhandler-4.3.1.tgz"
+  dependencies:
+    domelementtype: ^2.2.0
+  checksum: 4c665ceed016e1911bf7d1dadc09dc888090b64dee7851cccd2fcf5442747ec39c647bb1cb8c8919f8bbdd0f0c625a6bafeeed4b2d656bbecdbae893f43ffaaa
+  languageName: node
+  linkType: hard
+
+"domutils@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "domutils@npm:2.8.0::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fdomutils%2F-%2Fdomutils-2.8.0.tgz"
+  dependencies:
+    dom-serializer: ^1.0.1
+    domelementtype: ^2.2.0
+    domhandler: ^4.2.0
+  checksum: abf7434315283e9aadc2a24bac0e00eab07ae4313b40cc239f89d84d7315ebdfd2fb1b5bf750a96bc1b4403d7237c7b2ebf60459be394d625ead4ca89b934391
+  languageName: node
+  linkType: hard
+
 "dot-prop@npm:^5.1.0":
   version: 5.3.0
   resolution: "dot-prop@npm:5.3.0::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fdot-prop%2F-%2Fdot-prop-5.3.0.tgz"
@@ -1334,6 +1411,13 @@ __metadata:
   dependencies:
     iconv-lite: ^0.6.2
   checksum: bb98632f8ffa823996e508ce6a58ffcf5856330fde839ae42c9e1f436cc3b5cc651d4aeae72222916545428e54fd0f6aa8862fd8d25bdbcc4589f1e3f3715e7f
+  languageName: node
+  linkType: hard
+
+"entities@npm:^2.0.0":
+  version: 2.2.0
+  resolution: "entities@npm:2.2.0::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fentities%2F-%2Fentities-2.2.0.tgz"
+  checksum: 19010dacaf0912c895ea262b4f6128574f9ccf8d4b3b65c7e8334ad0079b3706376360e28d8843ff50a78aabcb8f08f0a32dbfacdc77e47ed77ca08b713669b3
   languageName: node
   linkType: hard
 
@@ -2142,6 +2226,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"html-tags@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "html-tags@npm:3.1.0::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fhtml-tags%2F-%2Fhtml-tags-3.1.0.tgz"
+  checksum: 67587f2d4022390d7bc34b1313773ecb0b0e0c79fb331aa3e20023eb4c862c7188a1ff775d126fcd75f4e4f08f956666a1c57688c4d24d85a77f9d4b1a42f345
+  languageName: node
+  linkType: hard
+
 "http-cache-semantics@npm:^4.1.0":
   version: 4.1.0
   resolution: "http-cache-semantics@npm:4.1.0"
@@ -2434,6 +2525,15 @@ __metadata:
   dependencies:
     is-extglob: ^2.1.1
   checksum: d381c1319fcb69d341cc6e6c7cd588e17cd94722d9a32dbd60660b993c4fb7d0f19438674e68dfec686d09b7c73139c9166b47597f846af387450224a8101ab4
+  languageName: node
+  linkType: hard
+
+"is-html@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "is-html@npm:3.0.0::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fis-html%2F-%2Fis-html-3.0.0.tgz"
+  dependencies:
+    html-tags: ^3.1.0
+  checksum: 97a7c459891b1709b663dc4fdcbf1118f9947e8f681514645b2d9fd79d6d8892683b4d329b4b3c0e35ced1b6ca7b12983c0460f0aaec8e7cef4c85500121c43c
   languageName: node
   linkType: hard
 
@@ -3140,6 +3240,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"node-html-markdown@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "node-html-markdown@npm:1.1.3::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fnode-html-markdown%2F-%2Fnode-html-markdown-1.1.3.tgz"
+  dependencies:
+    node-html-parser: ^4.1.5
+  checksum: 283f2ca3173b985ab60129a146e8703a613e1c590847a9857a88deac193ac1bcbde15b99c22a74e14aead1c041dfd2da1cfd3c63b6354e6008baac7f8a95fc0f
+  languageName: node
+  linkType: hard
+
+"node-html-parser@npm:^4.1.5":
+  version: 4.1.5
+  resolution: "node-html-parser@npm:4.1.5::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fnode-html-parser%2F-%2Fnode-html-parser-4.1.5.tgz"
+  dependencies:
+    css-select: ^4.1.3
+    he: 1.2.0
+  checksum: 1b9e330e098c4cdf7b9973ca5fb057529c3370f2cfb7d41fc1bb977173bc708615da2d6e7665850486bcf3dde4f1bba6b26130226674491b596a38bd37bf5054
+  languageName: node
+  linkType: hard
+
 "nopt@npm:^5.0.0":
   version: 5.0.0
   resolution: "nopt@npm:5.0.0"
@@ -3200,6 +3319,15 @@ __metadata:
     gauge: ^4.0.0
     set-blocking: ^2.0.0
   checksum: f1a4078a73ebc89896a832bbf869f491c32ecb12e0434b9a7499878ce8f29f22e72befe3c53cd8cdc9dbf4b4057297e783ab0b6746a8b067734de6205af4d538
+  languageName: node
+  linkType: hard
+
+"nth-check@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "nth-check@npm:2.0.1::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Fnth-check%2F-%2Fnth-check-2.0.1.tgz"
+  dependencies:
+    boolbase: ^1.0.0
+  checksum: 5386d035c48438ff304fe687704d93886397349d1bed136de97aeae464caba10e8ffac55a04b215b86b3bc8897f33e0a5aa1045a9d8b2f251ae61b2a3ad3e450
   languageName: node
   linkType: hard
 
@@ -4416,6 +4544,13 @@ __metadata:
   version: 1.14.1
   resolution: "tslib@npm:1.14.1::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Ftslib%2F-%2Ftslib-1.14.1.tgz"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.0.0":
+  version: 2.3.1
+  resolution: "tslib@npm:2.3.1::__archiveUrl=https%3A%2F%2Fprofessorbob-ai-291845142233.d.codeartifact.eu-west-3.amazonaws.com%3A443%2Fnpm%2Fnpm.registery.profressorbob%2Ftslib%2F-%2Ftslib-2.3.1.tgz"
+  checksum: de17a98d4614481f7fcb5cd53ffc1aaf8654313be0291e1bfaee4b4bb31a20494b7d218ff2e15017883e8ea9626599b3b0e0229c18383ba9dce89da2adf15cb9
   languageName: node
   linkType: hard
 

@@ -1,4 +1,6 @@
 import Sequelize from 'sequelize';
+import isHtml from 'is-html';
+import { text2html, html2text } from './sanitizer.js';
 
 async function linkQuestionAndAnwser(models, questionID, answerID) {
   await models.question_answers.create({
@@ -98,13 +100,40 @@ const answerDefaultValues = {
   updated_by: 2,
 };
 
-async function fetchOrCreateAnswer(models, question, answerText, corpusID, source, options) {
-  let a = await models.answers.findOne({
-    where: {
-      corpus_id: corpusID,
-      text: { [Sequelize.Op.iLike]: answerText.toLowerCase() },
-    },
-  });
+async function fetchOrCreateAnswer(models, question, answer, corpusID, source, options) {
+  let answerText = answer;
+  let answerHTML;
+  let isHTML;
+  if (
+    answer.match(/(?<!\\)\${2}([\s\S]+?)(?<!\\)\${2}/) ||
+    answer.match(/(?<!\\)\${1}([\s\S]+?)(?<!\\)\${1}/)
+  ) {
+    answerHTML = text2html(answer);
+    isHTML = true;
+  } else {
+    isHTML = isHtml(answer);
+    if (isHTML) {
+      answerHTML = answer;
+      answerText = html2text(answer);
+    }
+  }
+  let a;
+  if (isHTML) {
+    a = await models.answers.findOne({
+      where: {
+        corpus_id: corpusID,
+        html: { [Sequelize.Op.iLike]: answerHTML.toLowerCase() },
+      },
+    });
+  }
+  if (!a) {
+    a = await models.answers.findOne({
+      where: {
+        corpus_id: corpusID,
+        text: { [Sequelize.Op.iLike]: answerText.toLowerCase() },
+      },
+    });
+  }
   if (a !== null) {
     return a;
   }
@@ -118,10 +147,13 @@ async function fetchOrCreateAnswer(models, question, answerText, corpusID, sourc
   }
 
   const ao = {
-    text: answerText,
     corpus_id: corpusID,
     uri: uriSource,
+    text: answerText,
   };
+  if (answerHTML) {
+    ao.html = answerHTML;
+  }
   answerOptions.forEach((o) => {
     if (options.hasOwnProperty(o)) {
       ao[o] = options[o];

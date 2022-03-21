@@ -6,8 +6,10 @@ import { corporaToChapters } from '../src/messagers.js';
 
 let sequelize;
 let models;
+console.log(`host=${process.env.POSTGRES_HOST}`);
 before(async () => {
   if (!process.env.POSTGRES_HOST) {
+    console.log('not before');
     return;
   }
   sequelize = new Sequelize(
@@ -21,9 +23,10 @@ before(async () => {
 
 describe('insert_01', function () {
   if (!sequelize) {
-    return;
+    console.log('bye bye');
   }
   it('insert simpler question', async function () {
+    this.timeout(10000);
     const r1 = { question: 'Ceci est une très bonne question ?', answer: 'Non!!' };
     const options = {
       question_type: '3',
@@ -133,6 +136,64 @@ describe('insert_01', function () {
     await models.question_tags.destroy({
       where: {
         question_id: question.id,
+      },
+    });
+    await question.destroy();
+    await answer.destroy();
+  });
+  it('insert html question', async function () {
+    const r1 = { question: 'Ceci est une très bonne question ?', answer: '<b>Non!!</b>' };
+    const options = {
+      question_type: '3',
+      lang: 'fr',
+      source_type: 'client-content',
+      valid: 1,
+      fuzzy: 0,
+      relevancy: 1,
+      visibility: 1,
+      quality: 'good',
+    };
+    const [question, answer] = await insertQAFromRecord(models, r1, 93, options);
+    //    console.log(`created = ${JSON.stringify([question, answer], null, 2)}`);
+    assert.equal(r1.question, question.text, 'question.text');
+    assert.equal('client-content', question.source_type, 'question.source_type');
+    assert.equal(r1.answer, answer.html, 'answer.html');
+    //    const qa = question.getquestion();
+    await models.question_answers.destroy({
+      where: {
+        question_id: question.id,
+        answer_id: answer.id,
+      },
+    });
+    await question.destroy();
+    await answer.destroy();
+  });
+  it('insert latex question', async function () {
+    const r1 = { question: 'Ceci est une très bonne question ?', answer: '$\\frac{1}{(x+1)^2}$' };
+    const options = {
+      question_type: '3',
+      lang: 'fr',
+      source_type: 'client-content',
+      valid: 1,
+      fuzzy: 0,
+      relevancy: 1,
+      visibility: 1,
+      quality: 'good',
+    };
+    const [question, answer] = await insertQAFromRecord(models, r1, 93, options);
+    //    console.log(`created = ${JSON.stringify([question, answer], null, 2)}`);
+    assert.equal(r1.question, question.text, 'question.text');
+    assert.equal('client-content', question.source_type, 'question.source_type');
+    assert.equal(
+      answer.html,
+      '<p><inline-math math="\\frac{1}{(x+1)^2}"></inline-math></p>',
+      'answer.html',
+    );
+    //    const qa = question.getquestion();
+    await models.question_answers.destroy({
+      where: {
+        question_id: question.id,
+        answer_id: answer.id,
       },
     });
     await question.destroy();
